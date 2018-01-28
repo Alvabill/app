@@ -10,6 +10,8 @@ const path = require('path');
 
 const port = process.env.PORT || 3000;
 
+const mail = require('./mail.js');
+
 router.get('/',function(req,res){
 	var url_data = [];
 	fs.readFile(path.join(__dirname,'../doc','movies.txt'),'utf-8',(err, data)=>{
@@ -38,8 +40,14 @@ router.get('/',function(req,res){
             });
         });
         str += '</div>';
+        fs.writeFile(path.join(__dirname,'../doc','movies.html'),str,function(){});
         res.send(str);
 	});
+});
+
+router.get('/mail',function(req, res){
+	mail.send();
+	res.send("邮件已发送！");
 });
 
 app.use('/getMovie',router);

@@ -5,8 +5,10 @@
 		"cheerio": "^1.0.0-rc.2",
 		"express": "^4.16.2",
 		"fs": "0.0.1-security",
+		"nodemailer": "^4.4.2",
 		"path": "^0.12.7",
 		"superagent": "^3.8.2",
-		"superagent-charset": "^1.2.0"
+		"superagent-charset": "^1.2.0",
+		"utility": "^1.13.1"
 	}
 }
