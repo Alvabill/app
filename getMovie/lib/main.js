@@ -89,16 +89,22 @@ function getMovies(){
 		fs.writeFile(path.join(__dirname,'../doc','movies.txt'),'', function(){});
 		item.forEach(n=>{
 			n.data.forEach((m,i)=>{
-				request.get(m.href).charset().end((err, cres)=>{
-					var _$ = cheerio.load(cres.text);
-					var download_url = _$('#Zoom table a').text();
-					var title = _$('.bd3r .title_all').text();
-					title = title.substring(title.indexOf('《')+1,title.indexOf('》'));
-					var total_movie = title + '~~' + download_url +'\n';
-					//console.log(total_movie);
-					var buff = new Buffer(total_movie);
-					fs.appendFile(path.join(__dirname,'../doc','movies.txt'),buff,function(){});
-				});
+				if(m.href != 'http://www.dytt8.netundefined'){
+					request.get(m.href).charset().end((err, cres)=>{
+						if(err){
+							throw err;
+						}
+						var _$ = cheerio.load(cres.text);
+						var download_url = _$('#Zoom table a').text();
+						var title = _$('.bd3r .title_all').text();
+						title = title.substring(title.indexOf('《')+1,title.indexOf('》'));
+						var total_movie = title + '~~' + download_url +'\n';
+						//console.log(total_movie);
+						var buff = new Buffer(total_movie);
+						fs.appendFile(path.join(__dirname,'../doc','movies.txt'),buff,function(){});
+					});
+				}
+				
 			});
 		});
 	});
